@@ -20,8 +20,8 @@ function HomeGrid(props) {
     <Grid>
       <Grid.Row columns={2}>
         <Grid.Column floated={'left'} width={3}>
-          <Image verticalAlign='top' src={`../../assets/icons/${props.fiveDay.icon}.jpg`} />
-          <span>
+          <Image verticalAlign='top' align="left" src={`../../assets/icons/${props.fiveDay.icon}.png`} />
+          <span style={{color:"#6435c9"}}>
             <strong>{props.fiveDay.name}</strong>
             <br></br>
             <strong>{props.fiveDay.current}</strong>
