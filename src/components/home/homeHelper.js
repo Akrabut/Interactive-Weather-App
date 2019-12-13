@@ -1,7 +1,12 @@
 function setupDayArray(arr) {
-  return arr.map(forecast => (
-    `${forecast.Temperature.Minimum.Value}°C - ${forecast.Temperature.Maximum.Value}°C`
-  ))
+  return arr.map(forecast => {
+    const d = new Date(forecast.Date)
+    return (
+    {
+      temp: `${forecast.Temperature.Minimum.Value}°C - ${forecast.Temperature.Maximum.Value}°C`,
+      day: d.toLocaleDateString("en-IL", { weekday: 'long' }).slice(0, 3),
+    }
+  )})
 }
 
 export function setupCity(city, fiveDayForecast, currentWeather) {
@@ -9,6 +14,7 @@ export function setupCity(city, fiveDayForecast, currentWeather) {
     name: city.EnglishName,
     headline: currentWeather.WeatherText,
     fiveDays: setupDayArray(fiveDayForecast.DailyForecasts),
-    current: `${currentWeather.Temperature.Metric.Value} °C`
+    current: `${currentWeather.Temperature.Metric.Value} °C`,
+    icon: currentWeather.WeatherIcon,
   }
 }
