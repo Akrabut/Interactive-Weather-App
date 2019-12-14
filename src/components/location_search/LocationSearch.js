@@ -1,25 +1,36 @@
 import React, { useState } from 'react'
 import { Search } from 'semantic-ui-react'
-import { findResults, style } from './locationSearchHelper'
+import { style } from './locationSearchHelper'
+import { set } from '../location/locationActions'
+import { connect } from 'react-redux'
+import searchService from '../../services/searchService'
 
 function LocationSearch(props) {
   const [value, setValue] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [results, setResults] = useState([])
 
-  function handleSearchChange(event) {
-    const val = event.target.value
+  function resultToResultObject(results) {
+    return results.map(result => (
+      <Search.Result key={result.Key} title={result.LocalizedName}/>
+    ))
+  }
+
+  async function handleSearchChange(event) { 
+    const val = event.target.value // needed to use the artificial event twice
     setValue(val)
-    setIsLoading(true)
-    setTimeout(() => {
+    if (val < 1) {
       setIsLoading(false)
-      setResults(findResults(val))
-    }, 300)
-    // handle search here
+      return
+    }
+    setIsLoading(true)
+    setResults(resultToResultObject(await searchService.getAutoComplete(val)))
+    setIsLoading(false)
   }
 
   function handleResultSelect(event) {
-    console.log('hi');
+    console.log(event);
+    setValue('')
   }
 
   return (
@@ -31,10 +42,21 @@ function LocationSearch(props) {
         value={value}
         results={results}
         onSearchChange={handleSearchChange}
-        onResultSelect={(event) => handleResultSelect(event, results, setResults)}>
+        onResultSelect={handleResultSelect}>
       </Search>
     </div>
   )
 }
 
-export default LocationSearch
+const mapDispatchToProps = {
+  set,
+}
+
+function mapStateToProps(state) {
+  return {
+    location: state.location,
+  }
+}
+
+const connectedLocationSearch = connect(mapStateToProps, mapDispatchToProps)(LocationSearch)
+export default connectedLocationSearch

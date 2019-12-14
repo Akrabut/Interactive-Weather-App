@@ -5,6 +5,7 @@ function setupDayArray(arr) {
     {
       temp: `${forecast.Temperature.Minimum.Value}°C - ${forecast.Temperature.Maximum.Value}°C`,
       day: d.toLocaleDateString("en-IL", { weekday: 'long' }).slice(0, 3),
+      icon: forecast.Day.Icon,
     }
   )})
 }

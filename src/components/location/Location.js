@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { set } from './locationActions'
 import { setLocation } from './locationHelper'
 
+// this component only serves as a logical model for setting the initial location
 function Location(props) {
   useEffect(() => {
     // pass setLocation the connected set as a callback to separate it into the helper file

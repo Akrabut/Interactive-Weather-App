@@ -1,39 +1,19 @@
-import React, { useState } from 'react'
-import { Grid, Image, Button } from 'semantic-ui-react'
+import React from 'react'
+import { Grid, Image, Card } from 'semantic-ui-react'
+import LikeButton from '../like_button/LikeButton'
 
 function HomeGrid(props) {
-  const [buttonActive, setButtonActive] = useState(true)
-
-  function handleLike() {
-    if (buttonActive) setButtonActive(!buttonActive)
-  }
-
-  function setButtonColor() {
-    return (
-      buttonActive
-        ? 'violet'
-        : 'grey'
-    )
-  }
-
   return (
     <Grid>
       <Grid.Row columns={2}>
         <Grid.Column floated={'left'} width={3}>
           <Image verticalAlign='top' align="left" src={`../../assets/icons/${props.fiveDay.icon}.png`} />
-          <span style={{color:"#6435c9"}}>
-            <strong>{props.fiveDay.name}</strong>
-            <br></br>
-            <strong>{props.fiveDay.current}</strong>
+          <span style={{ color: "#6435c9" }}>
+            <strong>{props.fiveDay.name}<br></br>{props.fiveDay.current}</strong>
           </span>
         </Grid.Column>
         <Grid.Column textAlign='right' floated='right' width={2}>
-          <Button
-            color={setButtonColor()}
-            content='Like'
-            icon='heart'
-            active={buttonActive}
-            onClick={handleLike} />
+          <LikeButton/>
         </Grid.Column>
       </Grid.Row>
       <Grid.Row centered columns={1}>
@@ -43,9 +23,12 @@ function HomeGrid(props) {
         {props.fiveDay.fiveDays.map((day, i) => {
           return (
             <Grid.Column key={i}>
-              {day.day}
-              <br></br>
-              {day.temp}
+              <Card>
+                <Card.Content>
+                  <Image size='tiny' src={`../../assets/icons/${day.icon}.png`} />
+                  <Card.Description>{day.day}<br></br>{day.temp}</Card.Description>
+                </Card.Content>
+              </Card>
             </Grid.Column>
           )
         })}
