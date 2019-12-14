@@ -1,9 +1,15 @@
 import React, { useState } from 'react'
 import { Search } from 'semantic-ui-react'
-import { style } from './locationSearchHelper'
-import { set } from '../location/locationActions'
 import { connect } from 'react-redux'
 import searchService from '../../services/searchService'
+import { debounce } from 'lodash'
+import { setCachedFiveDay } from './locationSearchActions'
+
+export const style = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+}
 
 function LocationSearch(props) {
   const [value, setValue] = useState('')
@@ -12,11 +18,14 @@ function LocationSearch(props) {
 
   function resultToResultObject(results) {
     return results.map(result => (
-      <Search.Result key={result.Key} title={result.LocalizedName}/>
+      {
+        key: result.Key,
+        title: result.LocalizedName
+      }
     ))
   }
 
-  async function handleSearchChange(event) { 
+  async function handleSearchChange(event) {
     const val = event.target.value // needed to use the artificial event twice
     setValue(val)
     if (val < 1) {
@@ -28,8 +37,16 @@ function LocationSearch(props) {
     setIsLoading(false)
   }
 
-  function handleResultSelect(event) {
-    console.log(event);
+  function handleResultSelect(event, data) {
+    // no need to make three extra api calls when all the required data is already saved in a hashmap
+    // and can be fetched locally in O(1) instead of O(accuweather's server speed and response limit)
+    if (props.favorites.has(data.result.title)) {
+      return props.setCachedFiveDay(props.favorites.get(data.result.title))
+    }
+    // setFiveDay typically gets called upon entering to the app
+    // the first argument is the latitude/longitude coordinates for the data to be fetched
+    // this api call can be skipped since the city key is already fetched from the autocomplete api
+    props.setFiveDay(null, data.result.key, data.result.title)
     setValue('')
   }
 
@@ -41,7 +58,9 @@ function LocationSearch(props) {
         size={'large'}
         value={value}
         results={results}
-        onSearchChange={handleSearchChange}
+        onSearchChange={debounce(handleSearchChange, 500, {
+          leading: true,
+        })}
         onResultSelect={handleResultSelect}>
       </Search>
     </div>
@@ -49,12 +68,12 @@ function LocationSearch(props) {
 }
 
 const mapDispatchToProps = {
-  set,
+  setCachedFiveDay
 }
 
 function mapStateToProps(state) {
   return {
-    location: state.location,
+    favorites: state.favorites,
   }
 }
 

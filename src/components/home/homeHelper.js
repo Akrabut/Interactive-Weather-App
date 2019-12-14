@@ -10,9 +10,9 @@ function setupDayArray(arr) {
   )})
 }
 
-export function setupCity(city, fiveDayForecast, currentWeather) {
+export function setupCity(name, fiveDayForecast, currentWeather) {
   return {
-    name: city.EnglishName,
+    name: name,
     headline: currentWeather.WeatherText,
     fiveDays: setupDayArray(fiveDayForecast.DailyForecasts),
     current: `${currentWeather.Temperature.Metric.Value} °C`,

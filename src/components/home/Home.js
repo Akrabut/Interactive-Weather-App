@@ -6,14 +6,20 @@ import HomeGrid from '../home_grid/HomeGrid'
 import { connect } from 'react-redux';
 import { setFiveDay } from './homeActions'
 
-function Home(props) {
-  function renderHomeGrid(fiveDay) {
-    if (!fiveDay.fiveDays) return null
-    return <HomeGrid fiveDay={fiveDay} />
-  }
+// rendering HomeGrid is sync while the data that populates it is fetched async
+// this makes sure the component is rendered only after the required states are populated
+function renderHomeGrid(fiveDay) {
+  if (!fiveDay.fiveDays) return null
+  return <HomeGrid fiveDay={fiveDay} />
+}
 
+function Home(props) {
   useEffect(() => {
     (async () => {
+      // if the user didn't allow location access setup app with tel aviv
+      if (props.location.lat === 32.045 && props.location.lon === 34.77) {
+        return props.setFiveDay(null, 215854, 'Tel Aviv')
+      }
       props.setFiveDay(props.location)
     })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -21,7 +27,7 @@ function Home(props) {
 
   return (
     <Container>
-      <LocationSearch />
+      <LocationSearch setFiveDay={props.setFiveDay} />
       <Location />
       <Container>
         {renderHomeGrid(props.fiveDay)}

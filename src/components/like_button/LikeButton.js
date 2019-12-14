@@ -10,7 +10,7 @@ function LikeButton(props) {
     // like button should be disabled if city is already liked
     setButtonActive(!props.favorites.has(props.fiveDay.name))
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [props.fiveDay.name])
 
   function like(callback) {
     callback(props.fiveDay)
