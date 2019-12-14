@@ -17,22 +17,22 @@ function Navbar(props) {
         <p style={{ color: '#6435c9' }}>Or's weather app</p>
       </Menu.Item>
       <Menu.Menu position='right'>
-      <Link to='/home'>
         <Menu.Item
+          as={Link}
+          to='/favorites'
           name='Home'
           content='Home'
           active={value === 'home'}
-          onClick={() => handleChange('home', value, setValue)}
+          onClick={() => handleChange('home')}
         />
-        </Link>
-      <Link to='/favorites'>
         <Menu.Item
+          as={Link}
+          to='/favorites'
           name='Favorites'
           content='Favorites'
           active={value === 'favorites'}
-          onClick={() => handleChange('favorites', value, setValue)}
+          onClick={() => handleChange('favorites')}
         />
-        </Link>
       </Menu.Menu>
     </Menu>
   )
