@@ -2,10 +2,6 @@ import React from 'react'
 import { Grid, Image, Card } from 'semantic-ui-react'
 import LikeButton from '../like_button/LikeButton'
 
-const style = {
-  color: "#6435c9"
-}
-
 function HomeGrid(props) {
   return (
     <Grid>
@@ -39,6 +35,10 @@ function HomeGrid(props) {
       </Grid.Row>
     </Grid>
   )
+}
+
+const style = {
+  color: "#6435c9"
 }
 
 export default HomeGrid

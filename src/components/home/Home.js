@@ -6,16 +6,15 @@ import LocationSearch from '../location_search/LocationSearch'
 import HomeGrid from '../home_grid/HomeGrid'
 import { connect } from 'react-redux';
 import { setFiveDay } from './homeActions'
-
-// rendering HomeGrid is sync while the data that populates it is fetched async
-// this makes sure the component is rendered only after the required states are populated
-function renderHomeGrid(fiveDay) {
-  if (!fiveDay.fiveDays) return null
-  return <HomeGrid fiveDay={fiveDay} />
-}
+import { setCachedFiveDay } from '../location_search/locationSearchActions'
 
 function Home(props) {
   useEffect(() => {
+    if (props.match) {
+      console.log(props.match);
+      props.setCachedFiveDay(props.favorites.get(props.match))
+      return
+    }
     (async () => {
       // if the user didn't allow location access setup app with tel aviv
       if (props.location.lat === 32.045 && props.location.lon === 34.77) {
@@ -27,12 +26,19 @@ function Home(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.location])
 
+  // rendering HomeGrid is sync while the data that populates it is fetched async
+  // this makes sure the component is rendered only after the required states are populated
+  function renderHomeGrid() {
+    if (!props.fiveDay.fiveDays) return null
+    return <HomeGrid fiveDay={props.fiveDay} />
+  }
+
   return (
     <Container>
       <LocationSearch setFiveDay={props.setFiveDay} />
       <Location />
       <Container>
-        {renderHomeGrid(props.fiveDay)}
+        {renderHomeGrid()}
       </Container>
     </Container>
   )
@@ -40,12 +46,14 @@ function Home(props) {
 
 const mapDispatchToProps = {
   setFiveDay,
+  setCachedFiveDay,
 }
 
 function mapStateToProps(state) {
   return {
     location: state.location,
     fiveDay: state.fiveDay,
+    favorites: state.favorites,
   }
 }
 

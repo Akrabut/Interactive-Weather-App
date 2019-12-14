@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Menu } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
 
 function Navbar(props) {
-  const [value, setValue] = useState('home');
+  
 
   function handleChange(toRender) {
     // this can be shortened, but state change can be skipped if there's no need for it
-    if (value !== 'home' && toRender === 'home') setValue('home')
-    else if (value !== 'favorites' && toRender === 'favorites') setValue('favorites')
+    if (props.value !== 'home' && toRender === 'home') props.setValue('home')
+    else if (props.value !== 'favorites' && toRender === 'favorites') props.setValue('favorites')
   }
 
   return (
@@ -19,10 +19,10 @@ function Navbar(props) {
       <Menu.Menu position='right'>
         <Menu.Item
           as={Link}
-          to='/favorites'
+          to='/home'
           name='Home'
           content='Home'
-          active={value === 'home'}
+          active={props.value === 'home'}
           onClick={() => handleChange('home')}
         />
         <Menu.Item
@@ -30,7 +30,7 @@ function Navbar(props) {
           to='/favorites'
           name='Favorites'
           content='Favorites'
-          active={value === 'favorites'}
+          active={props.value === 'favorites'}
           onClick={() => handleChange('favorites')}
         />
       </Menu.Menu>

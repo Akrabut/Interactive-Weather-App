@@ -5,12 +5,6 @@ import searchService from '../../services/searchService'
 import { debounce } from 'lodash'
 import { setCachedFiveDay } from './locationSearchActions'
 
-export const style = {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-}
-
 function LocationSearch(props) {
   const [value, setValue] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -75,6 +69,12 @@ function mapStateToProps(state) {
   return {
     favorites: state.favorites,
   }
+}
+
+const style = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
 }
 
 const connectedLocationSearch = connect(mapStateToProps, mapDispatchToProps)(LocationSearch)

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Container } from 'semantic-ui-react'
 import { setCachedFiveDay } from '../location_search/locationSearchActions'
 import { Card, Image } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 
 function Favorites(props) {
   if (!props.favorites.values().next().value) return (
@@ -22,7 +23,7 @@ function Favorites(props) {
     <Container>
       <Card.Group centered>
         {getFavorites().map(favorite => (
-          <Card key={favorite.name} color='violet'>
+          <Card key={favorite.name} as={Link} to={`/home/${favorite.name}`} onClick={() => props.setNavbarTab('home')} color='violet'>
             <Card.Content textAlign='center'>
               <Card.Header style={{ fontSize: '1.5vw', color: '#6435c9' }}>
                 {favorite.name}<br></br>{favorite.current}
