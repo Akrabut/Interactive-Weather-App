@@ -3,6 +3,7 @@ export async function setLocation(set) {
     set({
       lat: pos.coords.latitude,
       lon: pos.coords.longitude,
+      asked: true,
     })
   }
   return navigator.geolocation.getCurrentPosition(success, (err) => err)

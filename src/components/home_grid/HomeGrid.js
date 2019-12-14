@@ -27,7 +27,7 @@ function HomeGrid(props) {
         {props.fiveDay.fiveDays.map((day, i) => {
           return (
             <Grid.Column key={i}>
-              <Card>
+              <Card color='violet'>
                 <Card.Content>
                   <Image size='tiny' src={`../../assets/icons/${day.icon}.png`} />
                   <Card.Description style={{fontSize: '1vw'}}>{day.day}<br></br>{day.temp}</Card.Description>

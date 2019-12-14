@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react'
 import { Container } from 'semantic-ui-react'
 import Location from '../location/Location'
@@ -18,6 +19,7 @@ function Home(props) {
     (async () => {
       // if the user didn't allow location access setup app with tel aviv
       if (props.location.lat === 32.045 && props.location.lon === 34.77) {
+        // tel aviv's key is hard coded
         return props.setFiveDay(null, 215854, 'Tel Aviv')
       }
       props.setFiveDay(props.location)

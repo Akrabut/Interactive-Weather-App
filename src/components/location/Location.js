@@ -6,8 +6,8 @@ import { setLocation } from './locationHelper'
 // this component only serves as a logical model for setting the initial location
 function Location(props) {
   useEffect(() => {
-    // pass setLocation the connected set as a callback to separate it into the helper file
-    setLocation(props.set)
+    // avoid asking the user for location access every time home component is rerendered
+    if (!props.location.asked) setLocation(props.set)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
