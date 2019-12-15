@@ -56,7 +56,7 @@ function LocationSearch(props) {
       <Search
         minCharacters={1}
         loading={isLoading}
-        size={'large'}
+        size={'big'}
         value={value}
         results={results}
         onSearchChange={debounce(handleSearchChange, 500, {

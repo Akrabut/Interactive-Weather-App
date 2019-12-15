@@ -34,12 +34,10 @@ function Home(props) {
   }
 
   return (
-    <Container>
+    <Container style={{width:"80%"}}>
       <LocationSearch setFiveDay={props.setFiveDay} />
       <Location />
-      <Container>
-        {renderHomeGrid()}
-      </Container>
+      {renderHomeGrid()}
     </Container>
   )
 }

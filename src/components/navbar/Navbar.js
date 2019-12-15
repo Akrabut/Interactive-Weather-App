@@ -3,8 +3,6 @@ import { Menu } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
 
 function Navbar(props) {
-  
-
   function handleChange(toRender) {
     // this can be shortened, but state change can be skipped if there's no need for it
     if (props.value !== 'home' && toRender === 'home') props.setValue('home')
@@ -12,7 +10,7 @@ function Navbar(props) {
   }
 
   return (
-    <Menu color={'violet'}>
+    <Menu color={'violet'} size={'huge'}>
       <Menu.Item header>
         <p style={{ color: '#6435c9' }}>Or's weather app</p>
       </Menu.Item>

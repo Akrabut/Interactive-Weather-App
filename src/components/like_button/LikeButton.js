@@ -36,6 +36,7 @@ function LikeButton(props) {
 
   return (
     <Button
+      size={'large'}
       color={setButtonColor()}
       content='Like'
       icon='heart'
