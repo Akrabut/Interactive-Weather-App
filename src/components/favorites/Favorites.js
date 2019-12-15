@@ -21,9 +21,9 @@ function Favorites(props) {
 
   return (
     <Container>
-      <Card.Group centered>
+      <Card.Group centered stackable={'true'}>
         {getFavorites().map(favorite => (
-          <Card key={favorite.name} as={Link} to={`/home/${favorite.name}`} onClick={() => props.setNavbarTab('home')} color='violet'>
+          <Card key={favorite.name} as={Link} to={`/home/${favorite.name}`} onClick={() => props.setNavbarTab('home')} color='violet' raised={'true'}>
             <Card.Content textAlign='center'>
               <Card.Header style={{ fontSize: '1.5vw', color: '#6435c9' }}>
                 {favorite.name}<br></br>{favorite.current}
