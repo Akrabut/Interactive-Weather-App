@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Navbar from './navbar/Navbar'
 import Home from './home/Home'
 import Favorites from './favorites/Favorites'
+import ERROR from './_Error/_Error'
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
   return (
     <Router className="App">
       <Navbar value={navbarTab} setValue={setNavbarTab}/>
+      <ERROR/>
       <Switch>
         <Route exact path='/'><Redirect to='/home' /></Route>
         <Route exact path='/home/:id'

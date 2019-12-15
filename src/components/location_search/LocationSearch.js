@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import searchService from '../../services/searchService'
 import { debounce } from 'lodash'
 import { setCachedFiveDay } from './locationSearchActions'
+import { setError } from '../_Error/errorActions'
 
 function LocationSearch(props) {
   const [value, setValue] = useState('')
@@ -11,6 +12,7 @@ function LocationSearch(props) {
   const [results, setResults] = useState([])
 
   function resultToResultObject(results) {
+    if (!results) return null
     return results.map(result => (
       {
         key: result.Key,
@@ -27,7 +29,9 @@ function LocationSearch(props) {
       return
     }
     setIsLoading(true)
-    setResults(resultToResultObject(await searchService.getAutoComplete(val)))
+    try {
+      setResults(resultToResultObject(await searchService.getAutoComplete(val)))
+    } catch (err) { props.setError(true, err.name, err.message);}
     setIsLoading(false)
   }
 
@@ -62,7 +66,7 @@ function LocationSearch(props) {
 }
 
 const mapDispatchToProps = {
-  setCachedFiveDay
+  setCachedFiveDay, setError
 }
 
 function mapStateToProps(state) {

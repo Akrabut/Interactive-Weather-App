@@ -7,11 +7,11 @@ import HomeGrid from '../home_grid/HomeGrid'
 import { connect } from 'react-redux';
 import { setFiveDay } from './homeActions'
 import { setCachedFiveDay } from '../location_search/locationSearchActions'
+import { setError } from '../_Error/errorActions'
 
 function Home(props) {
   useEffect(() => {
     if (props.match) {
-      console.log(props.match);
       props.setCachedFiveDay(props.favorites.get(props.match))
       return
     }
@@ -19,9 +19,9 @@ function Home(props) {
       // if the user didn't allow location access setup app with tel aviv
       if (props.location.lat === 32.045 && props.location.lon === 34.77) {
         // tel aviv's key is hard coded
-        return props.setFiveDay(null, 215854, 'Tel Aviv')
+        return props.setFiveDay(null, 215854, 'Tel Aviv', props.setError)
       }
-      props.setFiveDay(props.location)
+      props.setFiveDay(props.location, null, null, props.setError)
     })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.location])
@@ -47,6 +47,7 @@ function Home(props) {
 const mapDispatchToProps = {
   setFiveDay,
   setCachedFiveDay,
+  setError,
 }
 
 function mapStateToProps(state) {

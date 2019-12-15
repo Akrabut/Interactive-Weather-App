@@ -1,7 +1,6 @@
 // a hashmap can be used to fetch a city object from the favorite list in O(1)
 // instead of O(n) fetching from an array
 export const favoritesReducer = (state = new Map(), action) => {
-  console.log(state);
   switch (action.type) {
     case 'ADD_FAVORITE':
       const a = new Map(state)

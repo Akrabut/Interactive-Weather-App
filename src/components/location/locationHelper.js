@@ -6,5 +6,5 @@ export async function setLocation(set) {
       asked: true,
     })
   }
-  return navigator.geolocation.getCurrentPosition(success, (err) => err)
+  return navigator.geolocation.getCurrentPosition(success, (err) => console.log(err))
 }
