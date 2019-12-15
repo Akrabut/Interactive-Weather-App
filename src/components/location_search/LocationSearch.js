@@ -28,10 +28,13 @@ function LocationSearch(props) {
       setIsLoading(false)
       return
     }
-    setIsLoading(true)
     try {
       setResults(resultToResultObject(await searchService.getAutoComplete(val)))
-    } catch (err) { props.setError(true, err.name, err.message) }
+    } catch (err) { 
+      props.setError(true, err.name, err.message) 
+      setIsLoading(true)
+      setValue('')
+    }
     setIsLoading(false)
   }
 
