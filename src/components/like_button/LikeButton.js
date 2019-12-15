@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { addFavorite, removeFavorite } from './likeButtonActions'
+import { setError } from '../_Error/errorActions'
 
 function LikeButton(props) {
   const [buttonActive, setButtonActive] = useState(true)
@@ -13,8 +14,10 @@ function LikeButton(props) {
   }, [props.fiveDay.name])
 
   function like(callback) {
-    callback(props.fiveDay)
-    setButtonActive(!buttonActive)
+    try {
+      callback(props.fiveDay)
+      setButtonActive(!buttonActive)
+    } catch(err) { props.setError(true, err.name, err.message) }
   }
 
   function handleLike() {
@@ -42,7 +45,7 @@ function LikeButton(props) {
 }
 
 const mapDispatchToProps = {
-  addFavorite, removeFavorite
+  addFavorite, removeFavorite, setError,
 }
 
 function mapStateToProps(state) {

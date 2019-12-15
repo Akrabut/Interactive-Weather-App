@@ -31,7 +31,7 @@ function LocationSearch(props) {
     setIsLoading(true)
     try {
       setResults(resultToResultObject(await searchService.getAutoComplete(val)))
-    } catch (err) { props.setError(true, err.name, err.message);}
+    } catch (err) { props.setError(true, err.name, err.message) }
     setIsLoading(false)
   }
 
